@@ -13,7 +13,7 @@ export default function signin({ providers }) {
       />
       <div className="">
         {Object.values(providers||{}).map((provider,id) => (
-          <div key={provider.name} className="flex flex-col items-center" key={id}>
+          <div key=Ơ className="flex flex-col items-center" key={id}>
             <img
               className="w-36 object-cover"
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Dolphin-logo.svg/2048px-Dolphin-logo.svg.png"

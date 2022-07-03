@@ -23,19 +23,21 @@ class ErrorBoundary extends React.Component {
       return <h1>Something went wrong.</h1>;
     }
 
-    return this.props.children;
+    return this.props.children; 
   }
 }
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>
-      <RecoilRoot>
-        <ErrorBoundary>
+        <RecoilRoot>
+         <ErrorBoundary>
+f
           <Component {...pageProps} />
-        </ErrorBoundary>
-      </RecoilRoot>
-    </SessionProvider>
+         </ErrorBoundary>
+       
+        </RecoilRoot>
+      </SessionProvider>
   );
 }
 

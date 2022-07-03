@@ -32,11 +32,12 @@ export default function Comment({ comment, commentId, originalPostId }) {
   const router = useRouter();
 
   useEffect(() => {
-    if(originalPostId&&commentId)
-    const unsubscribe = onSnapshot(
-      collection(db, "posts", originalPostId, "comments", commentId, "likes"),
-      (snapshot) => setLikes(snapshot.docs)
-    );
+    if(originalPostId&&commentId){
+      const unsubscribe = onSnapshot(
+        collection(db, "posts", originalPostId, "comments", commentId, "likes"),
+        (snapshot) => setLikes(snapshot.docs)
+        );
+      }
   }, [db, originalPostId, commentId]);
 
   useEffect(() => {
@@ -46,8 +47,8 @@ export default function Comment({ comment, commentId, originalPostId }) {
   }, [likes]);
 
   async function likeComment() {
-    if (session&&originalPostId&&commentId) {
-      if (hasLiked) {
+    if (session) {
+      if (hasLiked &&originalPostId&&commentId) {
         await deleteDoc(
           doc(
             db,

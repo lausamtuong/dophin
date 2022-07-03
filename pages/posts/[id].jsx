@@ -47,7 +47,7 @@ export default function PostPage({ newsResults, randomUsersResults }) {
 
       <main className="flex min-h-screen mx-auto">
         {/* Sidebar */}
-        <Sidebar />
+        <SideBar />
 
         {/* Feed */}
 

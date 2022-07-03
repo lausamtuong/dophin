@@ -7,9 +7,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>
       <RecoilRoot>
-     
+        <ErrorBoundary>
           <Component {...pageProps} />
-       
+        </ErrorBoundary>
       </RecoilRoot>
     </SessionProvider>
   );

@@ -5,7 +5,7 @@ export default function News({ article }) {
                   <h6 className="text-sm font-bold">{article?.title}</h6>
                   <p className="text-xs font-medium text-gray-500">{article?.source?.name}</p>
             </div>
-            <img className="rounded-xl " width="70"  src={article?.urlToImage} alt="123" />
+            <img className="rounded-xl " width="70"  src={article?.urlToImage} alt="" />
   
         </div>
     </a>;

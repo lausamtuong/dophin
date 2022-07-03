@@ -59,6 +59,7 @@ const Chatbox = ({ currentUser, other, hidden }) => {
           setListText(snapshot.docs);
         }
       );
+      console.log("end");
     }
     setLoadding(false);
   }, [db, currentUser, other]);

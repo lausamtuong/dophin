@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 import Head from "next/head";
 import CommentModal from "../../components/CommentModal";
-import SideBar from "../../components/SideBar";
+import Sidebar from "../../components/Sidebar";
 import Widgets from "../../components/Widgets";
 import Post from "../../components/Post";
 import { useRouter } from "next/router";

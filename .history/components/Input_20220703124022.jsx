@@ -27,11 +27,11 @@ const Input = () => {
     if (loading) return;
     setLoading(true);
     const docRef = await addDoc(collection(db, "posts"), {
-      id: session?.user?.uid,
+      id: session.user?.uid,
       text: input,
-      userImg: session?.user?.image,
-      name: session?.user?.name,
-      username: session?.user?.username,
+      userImg: session.user?.image,
+      name: session.user?.name,
+      username: session.user?.username,
       timestamp: serverTimestamp(),
     });
     const imageRef = ref(storage, `posts/${docRef.id}/image`);
@@ -63,7 +63,7 @@ const Input = () => {
         <div className="flex  border-b border-gray-200 p-3 space-x-3">
           <img
             onClick={signOut}
-            src={session?.user?.image}
+            src={session.user?.image}
             alt="user-img"
             className="h-11 w-11 rounded-full cursor-pointer hover:brightness-95"
           />

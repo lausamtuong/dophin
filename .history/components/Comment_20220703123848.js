@@ -70,7 +70,7 @@ export default function Comment({ comment, commentId, originalPostId }) {
             session?.user?.uid
           ),
           {
-            username: session?.user?.username,
+            username: session?.user.username,
           }
         );
       }
@@ -155,12 +155,12 @@ export default function Comment({ comment, commentId, originalPostId }) {
                 className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100"
               />
             )}
-            {likes?.length > 0 && (
+            {likes.length > 0 && (
               <span
                 className={`${hasLiked && "text-red-600"} text-sm select-none`}
               >
                 {" "}
-                {likes?.length}
+                {likes.length}
               </span>
             )}
           </div>

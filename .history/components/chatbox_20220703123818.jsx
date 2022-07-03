@@ -98,7 +98,7 @@ const Chatbox = ({ currentUser, other, hidden,setHidden }) => {
                 <Message
                   key={ind}
                   model={{
-                    message: text?.data()?.text,
+                    message: text?.data().text,
                     sentTime: "1",
                     sender: text?.data()?.name,
                     direction:

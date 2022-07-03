@@ -101,13 +101,13 @@ export default function Post({ post, id }) {
     router.push("/");
   };
   const follow = async () => {
-    await setDoc(doc(db, "noti", post?.data()?.id, "follows_noti", session?.user?.uid), session.user);
+    await setDoc(doc(db, "noti", post?.data().id, "follows_noti", session?.user?.uid), session.user);
    if(!hasFollowed)
     await setDoc(
-      doc(db, "contact", session?.user?.uid, "follow", post?.data()?.id),
+      doc(db, "contact", session?.user?.uid, "follow", post?.data().id),
       post.data()
     )
-    else  await deleteDoc( doc(db, "contact", session?.user?.uid, "follow", post?.data()?.id));
+    else  await deleteDoc( doc(db, "contact", session?.user?.uid, "follow", post?.data().id));
   };
   return (
     <div className="flex p-3 cursor-pointer border-b border-gray-200">

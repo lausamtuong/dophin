@@ -102,22 +102,22 @@ export default function Widgets({ newsResults, currentUser }) {
             <img
               className="rounded-full"
               width="40"
-              src={Onlline?.data()?.image}
+              src={Onlline?.data().image}
               alt=""
             />
             <div className="truncate ml-4 leading-5">
               <h4 className="font-bold hover:underline text-[14px] truncate">
-                {Onlline?.data()?.name}
+                {Onlline?.data().name}
               </h4>
               <h5 className="text-[13px] text-gray-500 truncate">
-                {Onlline?.data()?.username }
+                {Onlline?.data().username }
               </h5>
             </div>
             <button 
              className="ml-auto bg-black text-white rounded-full text-sm px-3.5 py-1.5 font-bold"
               onClick={async()=>{
-                // console.log(Number(currentUser.uid)+Number(Onlline?.data()?.uid))
-                const id =Number(currentUser.uid)+Number(Onlline?.data()?.uid)
+                // console.log(Number(currentUser.uid)+Number(Onlline?.data().uid))
+                const id =Number(currentUser.uid)+Number(Onlline?.data().uid)
               //  await setDoc(doc(db, "chat",id, ), session.user);
               setHidden(!hidden)
               console.log(hidden)

@@ -160,7 +160,7 @@ export default function Comment({ comment, commentId, originalPostId }) {
                 className={`${hasLiked && "text-red-600"} text-sm select-none`}
               >
                 {" "}
-                {likes?.length}
+                {likes.length}
               </span>
             )}
           </div>

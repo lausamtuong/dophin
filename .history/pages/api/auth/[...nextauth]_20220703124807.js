@@ -15,7 +15,7 @@ export default NextAuth({
     secret: "fasifhwifasididuwiajaisd",
     callbacks: {
       async session({ session, token }) {
-        session.user.username = session?.user?.name
+        session?.user?.username = session.user.name
           .split(" ")
           .join("")
           .toLocaleLowerCase();

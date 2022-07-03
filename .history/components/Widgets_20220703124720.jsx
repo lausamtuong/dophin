@@ -121,7 +121,7 @@ export default function Widgets({ newsResults, currentUser }) {
               //  await setDoc(doc(db, "chat",id, ), session.user);
               setHidden(!hidden)
               console.log(hidden)
-                setOther(Onlline?.data())
+                setOther(Onlline?.data()?)
               }}
               >
               Nhắn tin

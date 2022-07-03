@@ -37,12 +37,12 @@ const CommentModal = () => {
     async function sendComment() {
       await addDoc(collection(db, "posts", postId, "comments"), {
         comment: input,
-        name: session?.user?.name,
-        username: session?.user?.username,
-        userImg: session?.user?.image,
+        name: session.user?.name,
+        username: session.user?.username,
+        userImg: session.user?.image,
         timestamp: serverTimestamp(),
-        userId: session?.user?.uid,  
-        email:session?.user?.email
+        userId: session.user?.uid,  
+        email:session.user.email
       });
   
       setOpen(false);

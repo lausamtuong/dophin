@@ -55,7 +55,7 @@ const Chatbox = ({ currentUser, other, hidden }) => {
           orderBy("timestamp", "asc")
         ),
         (snapshot) => {
-          console.log("snapshot");
+        
           setListText(snapshot.docs);
         }
       );

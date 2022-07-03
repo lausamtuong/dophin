@@ -33,7 +33,7 @@ export default function Comment({ comment, commentId, originalPostId }) {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      if(originalPostId&&commentId)
+      if()
       collection(db, "posts", originalPostId, "comments", commentId, "likes"),
       (snapshot) => setLikes(snapshot.docs)
     );
@@ -46,7 +46,7 @@ export default function Comment({ comment, commentId, originalPostId }) {
   }, [likes]);
 
   async function likeComment() {
-    if (session&&originalPostId&&commentId) {
+    if (session) {
       if (hasLiked) {
         await deleteDoc(
           doc(

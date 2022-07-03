@@ -64,12 +64,13 @@ export default function Post({ post, id }) {
   }, [db]);
 
   useEffect(() => {
-    if (id) {
-      const unsubscribe = onSnapshot(
-        collection(db, "posts", id, "comments"),
-        (snapshot) => setComments(snapshot.docs)
-      );
+    if(id){
+      
     }
+    const unsubscribe = onSnapshot(
+      collection(db, "posts", id, "comments"),
+      (snapshot) => setComments(snapshot.docs)
+    );
   }, [db]);
   useEffect(() => {
     setHasLikes(
@@ -84,7 +85,7 @@ export default function Post({ post, id }) {
   const handleAction = () => {};
   async function likePost() {
     if (session) {
-      if (hasLikes && id) {
+      if (hasLikes) {
         await deleteDoc(doc(db, "posts", id, "likes", session?.user?.uid));
         await deleteDoc(
           doc(db, "noti", post?.data()?.id, "likes_noti", session?.user?.uid)
@@ -93,39 +94,36 @@ export default function Post({ post, id }) {
         await setDoc(doc(db, "posts", id, "likes", session?.user?.uid), {
           username: session?.user?.username,
         });
-        if (post?.data()?.id)
-          await setDoc(
-            doc(db, "noti", post?.data()?.id, "likes_noti", session?.user?.uid),
-            session.user
-          );
+        await setDoc(
+          doc(db, "noti", post?.data()?.id, "likes_noti", session?.user?.uid),
+          session.user
+        );
       }
     } else {
       signIn();
     }
   }
   const deletePost = async () => {
-    if (window.confirm("Bạn đồng ý xóa bài chứ? ") && id) {
+    if (window.confirm("Bạn đồng ý xóa bài chứ? ")) {
       deleteDoc(doc(db, "posts", id));
       if (post?.data()?.image) deleteObject(ref(storage, `posts/${id}/image`));
     }
     router.push("/");
   };
   const follow = async () => {
-    if (post?.data()?.id && session?.user?.uid) {
+    await setDoc(
+      doc(db, "noti", post?.data()?.id, "follows_noti", session?.user?.uid),
+      session.user
+    );
+    if (!hasFollowed)
       await setDoc(
-        doc(db, "noti", post?.data()?.id, "follows_noti", session?.user?.uid),
-        session.user
+        doc(db, "contact", session?.user?.uid, "follow", post?.data()?.id),
+        post.data()
       );
-      if (!hasFollowed)
-        await setDoc(
-          doc(db, "contact", session?.user?.uid, "follow", post?.data()?.id),
-          post.data()
-        );
-      else
-        await deleteDoc(
-          doc(db, "contact", session?.user?.uid, "follow", post?.data()?.id)
-        );
-    }
+    else
+      await deleteDoc(
+        doc(db, "contact", session?.user?.uid, "follow", post?.data()?.id)
+      );
   };
   return (
     <div className="flex p-3 cursor-pointer border-b border-gray-200">

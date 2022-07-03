@@ -21,7 +21,7 @@ export default function Widgets({ newsResults, currentUser }) {
   }
   useEffect(
     () =>{
-      if( currentUser?.uid)
+      
       onSnapshot(
         query(collection(db, "contact", currentUser?.uid||"1","follow"), orderBy("timestamp", "desc")),
         (snapshot) => {

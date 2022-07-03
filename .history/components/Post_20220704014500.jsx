@@ -7,21 +7,14 @@ import {
   TrashIcon,
 } from "@heroicons/react/outline";
 import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
-import {
-  Dropdown,
-  Avatar,
-  Text,
-  Grid,
-  User,
-  Popover,
-  Button,
-} from "@nextui-org/react";
+import { Dropdown, Avatar, Text, Grid, User,Popover,Button } from "@nextui-org/react";
 import {
   setDoc,
   doc,
   onSnapshot,
   collection,
   deleteDoc,
+  
 } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import { signIn, useSession } from "next-auth/react";
@@ -34,6 +27,7 @@ import { useRecoilState } from "recoil";
 import { UserCard } from "./UserCard";
 
 export default function Post({ post, id }) {
+
   const router = useRouter();
   const [likes, setLikes] = useState([]);
   const [follower, setFollower] = useState([]);
@@ -42,34 +36,32 @@ export default function Post({ post, id }) {
   const [hasFollowed, setHasFollowed] = useState(false);
   const [open, setOpen] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
-  const { data: session } = useSession();
+  const {data:session} = useSession();
 
   useEffect(() => {
-    if (id) {
-      const unsubscribe = onSnapshot(
-        collection(db, "posts", id, "likes"),
-        (snapshot) => {
-          setLikes(snapshot.docs);
-        }
-      );
-    }
-  }, [db]);
-  useEffect(() => {
-    if (session?.user?.uid) {
-      const unsubscribe = onSnapshot(
-        collection(db, "contact", session?.user?.uid || "1", "follow"),
-        (snapshot) => setFollower(snapshot.docs)
-      );
-    }
-  }, [db]);
+  if(id){}
+    const unsubscribe = onSnapshot(
+      collection(db, "posts", id, "likes"),
+      (snapshot) => {
+     
+        setLikes(snapshot.docs)
+      }
+    );
 
+  }, [db]);
   useEffect(() => {
-    if (id) {
-      const unsubscribe = onSnapshot(
-        collection(db, "posts", id, "comments"),
-        (snapshot) => setComments(snapshot.docs)
-      );
-    }
+   
+    const unsubscribe = onSnapshot(
+      collection(db, "contact", session?.user?.uid||"1", "follow"),
+      (snapshot) => setFollower(snapshot.docs)
+    );
+  }, [db]);
+  
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "posts", id, "comments"),
+      (snapshot) => setComments(snapshot.docs)
+    );
   }, [db]);
   useEffect(() => {
     setHasLikes(
@@ -81,73 +73,60 @@ export default function Post({ post, id }) {
       follower.findIndex((follow) => follow.id === post?.data()?.id) !== -1
     );
   }, [follower]);
-  const handleAction = () => {};
+  const handleAction = () =>{
+   
+    
+  }
   async function likePost() {
     if (session) {
-      if (hasLikes && id) {
+      if (hasLikes) {
         await deleteDoc(doc(db, "posts", id, "likes", session?.user?.uid));
-        await deleteDoc(
-          doc(db, "noti", post?.data()?.id, "likes_noti", session?.user?.uid)
-        );
+        await deleteDoc(doc(db, "noti",  post?.data()?.id, "likes_noti", session?.user?.uid));
       } else {
         await setDoc(doc(db, "posts", id, "likes", session?.user?.uid), {
           username: session?.user?.username,
         });
-        if (post?.data()?.id)
-          await setDoc(
-            doc(db, "noti", post?.data()?.id, "likes_noti", session?.user?.uid),
-            session.user
-          );
+        await setDoc(doc(db, "noti", post?.data()?.id, "likes_noti", session?.user?.uid), session.user);
       }
+
     } else {
       signIn();
     }
   }
   const deletePost = async () => {
-    if (window.confirm("Bạn đồng ý xóa bài chứ? ") && id) {
+    if (window.confirm("Bạn đồng ý xóa bài chứ? ")) {
       deleteDoc(doc(db, "posts", id));
       if (post?.data()?.image) deleteObject(ref(storage, `posts/${id}/image`));
     }
     router.push("/");
   };
   const follow = async () => {
-    if (post?.data()?.id && session?.user?.uid) {
-      await setDoc(
-        doc(db, "noti", post?.data()?.id, "follows_noti", session?.user?.uid),
-        session.user
-      );
-      if (!hasFollowed)
-        await setDoc(
-          doc(db, "contact", session?.user?.uid, "follow", post?.data()?.id),
-          post.data()
-        );
-      else
-        await deleteDoc(
-          doc(db, "contact", session?.user?.uid, "follow", post?.data()?.id)
-        );
-    }
+    await setDoc(doc(db, "noti", post?.data()?.id, "follows_noti", session?.user?.uid), session.user);
+   if(!hasFollowed)
+    await setDoc(
+      doc(db, "contact", session?.user?.uid, "follow", post?.data()?.id),
+      post.data()
+    )
+    else  await deleteDoc( doc(db, "contact", session?.user?.uid, "follow", post?.data()?.id));
   };
   return (
     <div className="flex p-3 cursor-pointer border-b border-gray-200">
       {/* user image */}
-      <Popover>
-        <Popover.Trigger>
+      <Popover >
+          <Popover.Trigger>
           <img
-            className="h-11 w-11 rounded-full mr-4"
-            src={post?.data()?.userImg}
-            alt="user-img"
-            onClick={handleAction}
-          />
-        </Popover.Trigger>
-        <Popover.Content css={{ px: "$4", py: "$2" }}>
-          <UserCard
-            post={post}
-            follow={follow}
-            hasFollowed={hasFollowed}
-            setHasFollowed={setHasFollowed}
-          />
-        </Popover.Content>
-      </Popover>
+              className="h-11 w-11 rounded-full mr-4"
+              src={post?.data()?.userImg}
+              alt="user-img"
+              onClick={handleAction}
+            />
+          </Popover.Trigger>
+          <Popover.Content css={{ px: '$4', py: '$2' }}>
+            <UserCard post={post} follow={follow} hasFollowed={hasFollowed} setHasFollowed={setHasFollowed}/>
+          </Popover.Content>
+        </Popover>
+           
+         
 
       {/* right side */}
       <div className="w-full">
@@ -169,55 +148,46 @@ export default function Post({ post, id }) {
 
           {/* dot icon */}
           {session && session?.user?.uid !== post?.data().id ? (
-            <Dropdown placement="bottom-left">
-              <Dropdown.Trigger>
-                <DotsHorizontalIcon className="h-10 hoverEffect w-10 hover:bg-sky-100 hover:text-sky-500 p-2" />
-              </Dropdown.Trigger>
-              <Dropdown.Menu color="secondary" aria-label="Avatar Actions">
-                <Dropdown.Item key="profile" css={{ height: "$18" }}>
-                  {hasFollowed ? (
-                    <>
-                      <Text
-                        b
-                        color="success"
-                        css={{ d: "flex" }}
-                        onClick={follow}
-                      >
-                        Đã Theo dõi
-                      </Text>
-                      <Text b color="primary" css={{ d: "flex" }}>
-                        @{post?.data().username}
-                      </Text>
-                    </>
-                  ) : (
-                    <>
-                      {" "}
-                      <Text
-                        b
-                        color="inherit"
-                        css={{ d: "flex" }}
-                        onClick={follow}
-                      >
-                        Theo dõi
-                      </Text>
-                      <Text b color="inherit" css={{ d: "flex" }}>
-                        @{post?.data().username}
-                      </Text>
-                    </>
-                  )}
-                </Dropdown.Item>
-                <Dropdown.Item key="settings" withDivider>
-                  Nhắn tin
-                </Dropdown.Item>
+        <Dropdown placement="bottom-left">
+          <Dropdown.Trigger>
+          <DotsHorizontalIcon className="h-10 hoverEffect w-10 hover:bg-sky-100 hover:text-sky-500 p-2" />
+          </Dropdown.Trigger>
+          <Dropdown.Menu color="secondary" aria-label="Avatar Actions">
+            <Dropdown.Item key="profile" css={{ height: "$18" }}>
+              {hasFollowed ? (
+                <>
+                  <Text b color="success" css={{ d: "flex" }} onClick={follow}>
+                    Đã Theo dõi
+                  </Text>
+                  <Text b color="primary" css={{ d: "flex" }}>
+                    @{post?.data().username}
+                  </Text>
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <Text b color="inherit" css={{ d: "flex" }} onClick={follow}>
+                    Theo dõi
+                  </Text>
+                  <Text b color="inherit" css={{ d: "flex" }}>
+                    @{post?.data().username}
+                  </Text>
+                </>
+              )}
+            </Dropdown.Item>
+            <Dropdown.Item key="settings" withDivider>
+              Nhắn tin
+            </Dropdown.Item>
 
-                <Dropdown.Item key="logout" color="error" withDivider>
-                  Chặn
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          ) : (
-            <DotsHorizontalIcon className="h-10 hoverEffect w-10 hover:bg-sky-100 hover:text-sky-500 p-2" />
-          )}
+            <Dropdown.Item key="logout" color="error" withDivider>
+              Chặn
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      ) : (
+        <DotsHorizontalIcon className="h-10 hoverEffect w-10 hover:bg-sky-100 hover:text-sky-500 p-2" />
+      )}
+        
         </div>
 
         {/* post text */}
@@ -290,6 +260,7 @@ export default function Post({ post, id }) {
           <ChartBarIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
         </div>
       </div>
+   
     </div>
   );
 }

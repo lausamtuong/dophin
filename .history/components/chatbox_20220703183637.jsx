@@ -22,9 +22,11 @@ import {
 import { db, storage } from "../firebase";
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
+  setDoc,
+  doc,
   onSnapshot,
   collection,
-  
+  deleteDoc,
   addDoc,
   query,
   serverTimestamp,
@@ -46,6 +48,7 @@ const Chatbox = ({ currentUser, other, hidden,setHidden }) => {
     }
   };
   useEffect(() => {
+    console.log(currentUser?.uid, other?.uid);
     if (currentUser?.uid&&other?.uid) {
       const id = Number(currentUser?.uid) + Number(other?.uid);
 

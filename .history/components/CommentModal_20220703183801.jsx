@@ -18,7 +18,7 @@ import {
 } from "firebase/firestore";
 import Moment from "react-moment";
 import { useSession } from "next-auth/react";
-
+//import { userState } from "../atom/userAtom";
 const CommentModal = () => {
     const [open,setOpen] = useRecoilState(modalState)
     const{data:session}= useSession()
@@ -34,7 +34,6 @@ const CommentModal = () => {
     }, [postId, db]);
   
     async function sendComment() {
-      if(session)
       await addDoc(collection(db, "posts", postId, "comments"), {
         comment: input,
         name: session?.user?.name,

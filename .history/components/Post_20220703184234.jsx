@@ -14,7 +14,7 @@ import {
   onSnapshot,
   collection,
   deleteDoc,
-  
+  addDoc,
 } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import { signIn, useSession } from "next-auth/react";
@@ -43,7 +43,7 @@ export default function Post({ post, id }) {
     const unsubscribe = onSnapshot(
       collection(db, "posts", id, "likes"),
       (snapshot) => {
-     
+      //  if(session?.user?.uid===post?.data().id) notify()
         setLikes(snapshot.docs)
       }
     );
@@ -81,12 +81,12 @@ export default function Post({ post, id }) {
     if (session) {
       if (hasLikes) {
         await deleteDoc(doc(db, "posts", id, "likes", session?.user?.uid));
-        await deleteDoc(doc(db, "noti",  post?.data()?.id, "likes_noti", session?.user?.uid));
+        await deleteDoc(doc(db, "noti",  post.data().id, "likes_noti", session?.user?.uid));
       } else {
         await setDoc(doc(db, "posts", id, "likes", session?.user?.uid), {
           username: session?.user?.username,
         });
-        await setDoc(doc(db, "noti", post?.data()?.id, "likes_noti", session?.user?.uid), session.user);
+        await setDoc(doc(db, "noti", post?.data().id, "likes_noti", session?.user?.uid), session.user);
       }
 
     } else {
@@ -247,12 +247,12 @@ export default function Post({ post, id }) {
                 className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100"
               />
             )}
-            {likes?.length > 0 && (
+            {likes.length > 0 && (
               <span
                 className={`${hasLikes && "text-red-600"} text-sm select-none`}
               >
                 {" "}
-                {likes?.length}
+                {likes.length}
               </span>
             )}
           </div>

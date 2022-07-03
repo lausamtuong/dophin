@@ -22,9 +22,11 @@ import {
 import { db, storage } from "../firebase";
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
+  setDoc,
+  doc,
   onSnapshot,
   collection,
-  
+  deleteDoc,
   addDoc,
   query,
   serverTimestamp,
@@ -36,16 +38,16 @@ const Chatbox = ({ currentUser, other, hidden,setHidden }) => {
   const [listText, setListText] = useState([]);
   const [loadding, setLoadding] = useState(true);
   const send = async () => {
-    if(currentUser&&other){
-      const id = Number(currentUser?.uid) + Number(other?.uid);
-      await addDoc(collection(db, "chat", String(id), "data"), {
-        ...currentUser,
-        text: input,
-        timestamp: serverTimestamp(),
-      });
-    }
+    if(currentUser&&other{})
+    const id = Number(currentUser?.uid) + Number(other?.uid);
+    await addDoc(collection(db, "chat", String(id), "data"), {
+      ...currentUser,
+      text: input,
+      timestamp: serverTimestamp(),
+    });
   };
   useEffect(() => {
+    console.log(currentUser?.uid, other?.uid);
     if (currentUser?.uid&&other?.uid) {
       const id = Number(currentUser?.uid) + Number(other?.uid);
 

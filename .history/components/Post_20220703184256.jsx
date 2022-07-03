@@ -14,7 +14,7 @@ import {
   onSnapshot,
   collection,
   deleteDoc,
-  
+  addDoc,
 } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import { signIn, useSession } from "next-auth/react";
@@ -247,12 +247,12 @@ export default function Post({ post, id }) {
                 className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100"
               />
             )}
-            {likes?.length > 0 && (
+            {likes.length > 0 && (
               <span
                 className={`${hasLikes && "text-red-600"} text-sm select-none`}
               >
                 {" "}
-                {likes?.length}
+                {likes.length}
               </span>
             )}
           </div>

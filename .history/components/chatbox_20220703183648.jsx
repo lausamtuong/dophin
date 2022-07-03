@@ -22,9 +22,11 @@ import {
 import { db, storage } from "../firebase";
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
+  setDoc,
+  doc,
   onSnapshot,
   collection,
-  
+  deleteDoc,
   addDoc,
   query,
   serverTimestamp,

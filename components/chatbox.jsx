@@ -48,7 +48,7 @@ const Chatbox = ({ currentUser, other, hidden,setHidden }) => {
   };
   useEffect(() => {
     console.log(currentUser?.uid, other?.uid);
-    if (currentUser?.uid) {
+    if (currentUser?.uid&&other?.uid) {
       const id = Number(currentUser?.uid) + Number(other?.uid);
 
       const unsubscribe = onSnapshot(

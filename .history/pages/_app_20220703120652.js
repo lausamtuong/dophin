@@ -5,13 +5,13 @@ import { ErrorBoundary } from "./ErrorBoundary";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <SessionProvider session={session}>
+    <ErrorBoundary>
+      <SessionProvider session={session}>
         <RecoilRoot>
-          <ErrorBoundary>
           <Component {...pageProps} />
-        </ErrorBoundary>
         </RecoilRoot>
       </SessionProvider>
+    </ErrorBoundary>
   );
 }
 

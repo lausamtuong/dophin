@@ -5,7 +5,7 @@ import ErrorBoundary from "./ErrorBoundary";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <ErrorBoundary >
+    <ErrorBoundary }>
       <SessionProvider session={session}>
         <RecoilRoot>
           <Component {...pageProps} />

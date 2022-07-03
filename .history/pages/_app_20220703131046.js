@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { RecoilRoot } from "recoil";
-import React from 'react';
+import React fro
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);

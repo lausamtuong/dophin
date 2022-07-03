@@ -32,8 +32,8 @@ export default function Comment({ comment, commentId, originalPostId }) {
   const router = useRouter();
 
   useEffect(() => {
+    if(originalPostId&&commentId)
     const unsubscribe = onSnapshot(
-      if(originalPostId&&commentId)
       collection(db, "posts", originalPostId, "comments", commentId, "likes"),
       (snapshot) => setLikes(snapshot.docs)
     );

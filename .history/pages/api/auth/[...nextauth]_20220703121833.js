@@ -12,7 +12,8 @@ export default NextAuth({
     pages:{
       signIn:'/auth/signin',
     },
-    secret: "fasifhwifasididuwiajaisd",
+    secret: fasifhwifasididuwiajaisd,
+    ,
     callbacks: {
       async session({ session, token }) {
         session.user.username = session.user.name
